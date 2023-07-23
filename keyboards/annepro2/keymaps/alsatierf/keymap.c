@@ -2,12 +2,17 @@
 #include "annepro2.h"
 #include "config.h"
 #include "g/keymap_combo.h"
-#include QMK_KEYBOARD_H
 #include "features/achordion.h"
+#include "features/layer_lock.h"
+#include QMK_KEYBOARD_H
 
 enum anne_pro_layers {
   _BASE_LAYER,
   _FN1_LAYER,
+};
+
+enum custom_keycodes {
+  LLOCK = SAFE_RANGE,
 };
 
 const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -21,9 +26,9 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [_FN1_LAYER] = LAYOUT_60_ansi(
     KC_GRV, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_BSPC,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, KC_UP, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-    KC_TRNS, MT(MOD_LSFT, KC_HOME), KC_PGUP, KC_PGDN, KC_END, KC_TRNS, KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, KC_TRNS,
-    KC_TRNS, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGUP, KC_HOME, KC_UP, KC_END, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, LLOCK, KC_TRNS, KC_TRNS,
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TAB, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
     KC_TRNS, KC_TRNS, KC_TRNS, KC_LSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
   ),
 };
@@ -34,6 +39,7 @@ void matrix_init_user(void) {}
 
 void matrix_scan_user(void) {
   achordion_task();
+  layer_lock_task();
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -50,6 +56,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_achordion(keycode, record)) { return false; }
+    if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
     return true;
 };
 
