@@ -21,8 +21,8 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [_FN1_LAYER] = LAYOUT_60_ansi(
     KC_GRV, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_BSPC,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGUP, KC_HOME, KC_UP, KC_END, KC_BSPC, KC_DEL, KC_TRNS, KC_TRNS,
-    KC_TRNS, KC_LSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_RSFT, KC_TRNS, KC_TRNS,
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, KC_UP, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS, MT(MOD_LSFT, KC_HOME), KC_PGUP, KC_PGDN, KC_END, KC_TRNS, KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, KC_TRNS,
     KC_TRNS, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
     KC_TRNS, KC_TRNS, KC_TRNS, KC_LSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
   ),
@@ -65,8 +65,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
   switch (tap_hold_keycode) {
     case LT(_FN1_LAYER, KC_SPC):
-    case MT(MOD_LCTL, KC_ESC):
-      return 0;  // Bypass Achordion for these keys.
+      return 0;  // Bypass Achordion
   }
   return 3000;  // Otherwise use a timeout of 3s.
 }
