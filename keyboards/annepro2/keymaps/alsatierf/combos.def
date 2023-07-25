@@ -15,3 +15,4 @@ COMB(IL_GA,                 OSM(MOD_RGUI|MOD_LALT),             KC_I,     KC_L)
 COMB(IO_CAG,                OSM(MOD_LALT|MOD_RCTL|MOD_RGUI),    KC_I,     KC_O)
 
 COMB(COMM_DOT_RALT,         OSM(MOD_RALT),                      KC_COMM,  KC_DOT)
+COMB(JKL_L1,                TO(1),                              KC_J,     KC_K,   KC_L)
